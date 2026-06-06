@@ -1,19 +1,33 @@
 plugins {
-    id("java")
+    java // Aktiviert das Java-Plugin
 }
 
-group = "org.example"
-version = "1.0-SNAPSHOT"
-
 repositories {
-    mavenCentral()
+    mavenCentral() // Lädt die Bibliotheken aus dem zentralen Maven-Repository
+}
+
+// Erkennt automatisch das Betriebssystem für die nativen LWJGL-Bibliotheken
+val osName = System.getProperty("os.name").lowercase()
+val lwjglNatives = when {
+    osName.contains("win") -> "natives-windows"
+    osName.contains("mac") -> "natives-macos"
+    osName.contains("nix") || osName.contains("nux") -> "natives-linux"
+    else -> throw GradleException("Unsupported operating system: $osName")
 }
 
 dependencies {
-    testImplementation(platform("org.junit:junit-bom:5.10.0"))
-    testImplementation("org.junit.jupiter:junit-jupiter")
-}
+    // 1. JOML (Mathematik-Bibliothek für 3D-Grafik)
+    implementation("org.joml:joml:1.10.8")
 
-tasks.test {
-    useJUnitPlatform()
+    // 2. LWJGL Core
+    implementation("org.lwjgl:lwjgl:3.3.4")
+    runtimeOnly("org.lwjgl:lwjgl:3.3.4:$lwjglNatives")
+
+    // 3. LWJGL GLFW (Fenster- und Input-Management)
+    implementation("org.lwjgl:lwjgl-glfw:3.3.4")
+    runtimeOnly("org.lwjgl:lwjgl-glfw:3.3.4:$lwjglNatives")
+
+    // 4. LWJGL OpenGL (Grafik-Rendering)
+    implementation("org.lwjgl:lwjgl-opengl:3.3.4")
+    runtimeOnly("org.lwjgl:lwjgl-opengl:3.3.4:$lwjglNatives")
 }
