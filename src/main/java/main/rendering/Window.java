@@ -156,13 +156,13 @@ public class Window {
                     }
 
                     int locNear = org.lwjgl.opengl.GL20.glGetUniformLocation(id, "u_lodDistNear");
-                    if (locNear != -1) org.lwjgl.opengl.GL20.glUniform1f(locNear, 200.0f); // 40 Meter voll dicht
+                    if (locNear != -1) org.lwjgl.opengl.GL20.glUniform1f(locNear, 200.0f);
 
                     int locMed = org.lwjgl.opengl.GL20.glGetUniformLocation(id, "u_lodDistMed");
-                    if (locMed != -1) org.lwjgl.opengl.GL20.glUniform1f(locMed, 400.0f); // Ab 120 Meter sehr ausgedünnt
+                    if (locMed != -1) org.lwjgl.opengl.GL20.glUniform1f(locMed, 400.0f);
 
                     int locMaxDist = org.lwjgl.opengl.GL20.glGetUniformLocation(id, "u_maxVisibilityDist");
-                    if (locMaxDist != -1) org.lwjgl.opengl.GL20.glUniform1f(locMaxDist, 250.0f); // Gras blendet bis 250 Meter komplett aus
+                    if (locMaxDist != -1) org.lwjgl.opengl.GL20.glUniform1f(locMaxDist, 500.0f); // Gras blendet bis 250 Meter komplett aus
                 })
                 // Haupt-Render Stufe für die Vegetation
                 .mainVertex("shaders/grass_v.glsl")
