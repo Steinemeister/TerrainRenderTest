@@ -11,6 +11,9 @@ public class RenderContext {
     // OpenGL Buffer-IDs für automatisiertes Compute / Indirect Rendering
     private int objectDataBuffer = 0;
     private int indirectCommandBuffer = 0;
+    private int visibleInstancesBuffer = 0;
+
+    private org.joml.Vector3f cameraPosition = new org.joml.Vector3f();
 
     // Getters & Setters
     public Matrix4f getProjectionMatrix() { return projectionMatrix; }
@@ -25,4 +28,8 @@ public class RenderContext {
     public void setObjectDataBuffer(int id) { this.objectDataBuffer = id; }
     public int getIndirectCommandBuffer() { return indirectCommandBuffer; }
     public void setIndirectCommandBuffer(int id) { this.indirectCommandBuffer = id; }
+    public int getVisibleInstancesBuffer() { return visibleInstancesBuffer; }
+    public void setVisibleInstancesBuffer(int id) { this.visibleInstancesBuffer = id; }
+    public org.joml.Vector3f getCameraPosition() { return cameraPosition; }
+    public void setCameraPosition(org.joml.Vector3f pos) { this.cameraPosition.set(pos); }
 }

@@ -30,4 +30,11 @@ dependencies {
     // 4. LWJGL OpenGL (Grafik-Rendering)
     implementation("org.lwjgl:lwjgl-opengl:3.3.4")
     runtimeOnly("org.lwjgl:lwjgl-opengl:3.3.4:$lwjglNatives")
+
+    // LWJGL Bill of Materials (BOM) definiert die passenden Versionen aller Module
+    implementation(platform("org.lwjgl:lwjgl-bom:3.3.4"))
+
+    // STB-Modul (für STBImage) & OS-Natives
+    implementation("org.lwjgl:lwjgl-stb")
+    runtimeOnly("org.lwjgl:lwjgl-stb::$lwjglNatives")
 }

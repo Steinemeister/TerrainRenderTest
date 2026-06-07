@@ -17,7 +17,9 @@ public class Camera {
     private final Vector4f[] frustumPlanes = new Vector4f[6];
 
     public Camera() {
-        for (int i = 0; i < 6; i++) frustumPlanes[i] = new Vector4f();
+        for (int i = 0; i < 6; i++) {
+            frustumPlanes[i] = new Vector4f();
+        }
     }
 
     public void update(int width, int height) {
@@ -39,18 +41,29 @@ public class Camera {
     }
 
     private void extractPlanes() {
+        // Zwischenspeicher-Vektoren, um Garbage-Collection-Overhead in der Schleife zu verhindern
+        Vector4f row0 = new Vector4f();
+        Vector4f row1 = new Vector4f();
+        Vector4f row2 = new Vector4f();
+        Vector4f row3 = new Vector4f();
+
+        viewProjection.getRow(0, row0);
+        viewProjection.getRow(1, row1);
+        viewProjection.getRow(2, row2);
+        viewProjection.getRow(3, row3);
+
         // Links
-        viewProjection.getRow(3, frustumPlanes[0]).add(viewProjection.getRow(0, new Vector4f()));
+        row3.add(row0, frustumPlanes[0]);
         // Rechts
-        viewProjection.getRow(3, frustumPlanes[1]).sub(viewProjection.getRow(0, new Vector4f()));
+        row3.sub(row0, frustumPlanes[1]);
         // Unten
-        viewProjection.getRow(3, frustumPlanes[2]).add(viewProjection.getRow(1, new Vector4f()));
+        row3.add(row1, frustumPlanes[2]);
         // Oben
-        viewProjection.getRow(3, frustumPlanes[3]).sub(viewProjection.getRow(1, new Vector4f()));
+        row3.sub(row1, frustumPlanes[3]);
         // Nah
-        viewProjection.getRow(3, frustumPlanes[4]).add(viewProjection.getRow(2, new Vector4f()));
+        row3.add(row2, frustumPlanes[4]);
         // Fern
-        viewProjection.getRow(3, frustumPlanes[5]).sub(viewProjection.getRow(2, new Vector4f()));
+        row3.sub(row2, frustumPlanes[5]);
 
         for (int i = 0; i < 6; i++) {
             Vector4f plane = frustumPlanes[i];
@@ -59,14 +72,14 @@ public class Camera {
 
             // Alle 4 Komponenten (inklusive Distanz w!) durch diese 3D-Länge teilen
             if (length > 0.0f) {
-                plane.x /= length;
-                plane.y /= length;
-                plane.z /= length;
-                plane.w /= length;
+                plane.div(length);
             }
         }
     }
 
+    // --- Bestehende und neue Getter für das automatisierte Pipelinesystem ---
+    public Matrix4f getProjectionMatrix() { return projectionMatrix; }
+    public Matrix4f getViewMatrix() { return viewMatrix; }
     public Matrix4f getViewProjection() { return viewProjection; }
     public Vector4f[] getFrustumPlanes() { return frustumPlanes; }
 }

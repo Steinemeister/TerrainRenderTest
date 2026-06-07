@@ -14,8 +14,8 @@ out vec3 outColor;
 
 // Lokale Geometrie eines simplen Grashalms (Vorderseite eines Dreiecks)
 vec3 grassVertices[3] = vec3[](
-vec3(-0.1, 0.0, 0.0), // Unten Links
-vec3( 0.1, 0.0, 0.0), // Unten Rechts
+vec3(-0.2, 0.0, 0.0), // Unten Links
+vec3( 0.2, 0.0, 0.0), // Unten Rechts
 vec3( 0.0, 1.5, 0.0)  // Spitze
 );
 
@@ -45,4 +45,3 @@ void main() {
 
     gl_Position = viewProjection * vec4(finalWorldPos, 1.0);
 }
-
